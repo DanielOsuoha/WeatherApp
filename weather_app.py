@@ -7,9 +7,13 @@ def get_weather(city):
     url = f'{BASE_URL}?q={city}&appid={API_KEY}'
     response = requests.get(url)
     if response.status_code == 200:
-        return response.json()
+        data = response.json()
+        weather = data['weather'][0]['description']
+        temp = data['main']['temp'] - 273.15
+        return f'The weather in {city} is {weather} and the temperature is {temp:.2f} Celsius'
+        
     else:
-        print(requests.status_code)
+        print(response, response.status_code)
         return None
     
 
